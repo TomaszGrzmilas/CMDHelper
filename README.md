@@ -29,7 +29,7 @@ static void Main(string[] args)
 {
     var process = new CMDHelper.Instance(new[] { ("PATH", @"C:\Program Files\dotnet") });
 
-    foreach (var item in process.Run("dotnet --list"))
+    foreach (var item in process.Run("dotnet --version"))
     {
         Console.WriteLine(item);
     }
