@@ -24,4 +24,16 @@ static void Main(string[] args)
     }
     Console.ReadLine();
 }
+
+static void Main(string[] args)
+{
+    var process = new CMDHelper.Instance(new[] { ("PATH", @"C:\Program Files\dotnet") });
+
+    foreach (var item in process.Run("dotnet --list"))
+    {
+        Console.WriteLine(item);
+    }
+    Console.ReadLine();
+}
+
 ```

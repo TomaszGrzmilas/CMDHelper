@@ -44,7 +44,7 @@ namespace CMDHelper
 
             if (proc.ExitCode != 0)
             {
-                throw new Exception(string.Join(Environment.NewLine, ret));
+                throw new Exception($"Exit code: '{proc.ExitCode}' for command: '{command}'");
             }
 
             return ret;
