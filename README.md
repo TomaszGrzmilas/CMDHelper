@@ -2,7 +2,7 @@
 Wrapper for CMD.EXE
 
 # Usage
-
+{
 static void Main(string[] args)
 {
 
@@ -15,4 +15,5 @@ static void Main(string[] args)
     }
 
     Console.ReadLine();
+}
 }
