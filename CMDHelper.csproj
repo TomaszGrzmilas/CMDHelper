@@ -1,7 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <Authors>Tomasz Grzmilas</Authors>
+    <Company>Tomasz Grzmilas</Company>
+    <Description>Wrap for windows cmd.exe</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/TomaszGrzmilas/CMDHelper</PackageProjectUrl>
+    <PackageReleaseNotes>This is the initial release</PackageReleaseNotes>
+    <PackageTags>windows cmd wrapper helper run command line</PackageTags>
   </PropertyGroup>
 
 </Project>

@@ -7,6 +7,7 @@ namespace CMDHelper
     public class Instance
     {
         private readonly ProcessStartInfo PROCES_INFO;
+        private Process process;
 
         public Instance((string key, string value)[] EnvironmentVariable = null, bool createNoWindow = true, bool redirectStandardOutput = true)
         {
@@ -16,6 +17,7 @@ namespace CMDHelper
                 RedirectStandardOutput = redirectStandardOutput,
                 CreateNoWindow = createNoWindow
             };
+
             SetEnvVariables___(EnvironmentVariable);
         }
 
@@ -24,27 +26,63 @@ namespace CMDHelper
             return Run___(command);
         }
 
+        public IAsyncEnumerable<string> RunAsync(string command)
+        {
+            return RunAsync___(command);
+        }
+
+        public void Kill()
+        {
+            process.Kill();
+        }
+
+        private async IAsyncEnumerable<string> RunAsync___(string command)
+        {
+            //List<string> ret = new List<string>();
+
+            PROCES_INFO.Arguments = "/C " + command;
+
+            process = new Process()
+            {
+                StartInfo = PROCES_INFO
+            };
+
+            process.Start();
+
+            while (!process.StandardOutput.EndOfStream)
+            {
+                yield return await process.StandardOutput.ReadLineAsync();
+            }
+
+            if (process.ExitCode != 0)
+            {
+                throw new Exception($"Exit code: '{process.ExitCode}' for command: '{command}'");
+            }
+
+            yield return "";
+        }
+
         private List<string> Run___(string command)
         {
             List<string> ret = new List<string>();
 
             PROCES_INFO.Arguments = "/C " + command;
 
-            var proc = new Process()
+            process = new Process()
             {
                 StartInfo = PROCES_INFO
             };
 
-            proc.Start();
+            process.Start();
 
-            while (!proc.StandardOutput.EndOfStream)
+            while (!process.StandardOutput.EndOfStream)
             {
-                ret.Add(proc.StandardOutput.ReadLine());
+                ret.Add(process.StandardOutput.ReadLine());
             }
 
-            if (proc.ExitCode != 0)
+            if (process.ExitCode != 0)
             {
-                throw new Exception($"Exit code: '{proc.ExitCode}' for command: '{command}'");
+                throw new Exception($"Exit code: '{process.ExitCode}' for command: '{command}'");
             }
 
             return ret;
